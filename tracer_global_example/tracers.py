@@ -1,5 +1,4 @@
-from tracers_spans_python.tracers_spans import Tracer
-import socket
+from tracers_spans_python import Tracer
 
 PROJECT_NAME = 'OPS'
 
