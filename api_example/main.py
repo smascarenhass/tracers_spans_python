@@ -25,7 +25,7 @@ def example_endpoint():
         }
 
 @app.get("/create_async_tracer")
-@TRACER.new_tracer()
+@TRACER.new_async_tracer()
 async def example_async_endpoint():
 
     # Do some work

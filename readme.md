@@ -31,6 +31,16 @@ Para a cração de um novo tracer deve ser chamado a função new_tracer:
 Essa função coleta o nome da funcção do endpoint e usa como nome do tracer.
 Para anotações do tracer chame a função annotate_tracer, e passe a anotação como string.
 
+**New async tracer**
+
+Para a cração de um novo tracer para um endpoint ou função asyncrona deve ser chamado a função new_async_tracer:
+
+    @app.get("/create_tracer")
+    @tracer.new_async_tracer()
+    def example_endpoint():
+        return 'hello world'
+
+
 **New child**
 
 Para a cração de um novo tracer deve ser chamado a função new_child:
@@ -42,6 +52,16 @@ Para a cração de um novo tracer deve ser chamado a função new_child:
 
 Essa função coleta o nome da função e usa como nome do tracer.
 Para anotações do tracer chame a função annotate_span, e passe a anotação como string.
+
+**New async child**
+
+Para a cração de uma nova child para uma função asyncrona deve ser chamado a função new_async_child:
+
+    @app.get("/create_tracer")
+    @tracer.new_async_child()
+    def example_endpoint():
+        return 'hello world'
+
 
 **Annotates e tags**
 

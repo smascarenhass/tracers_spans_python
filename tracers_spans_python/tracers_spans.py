@@ -65,6 +65,26 @@ class Tracer:
                 with self.tracer.new_trace(sampled=True) as self.span:
                     self.span.name(func.__name__)
                     
+                    result = func(*args, **kwargs)
+
+
+                return result
+            return wrapper
+        return decorator
+    
+    def new_async_tracer(self):
+        def decorator(func):
+            @wraps(func)
+            async def wrapper(*args, **kwargs):
+                tool = Tracer(
+                    host=self.host, ip_application=self.ipv4,
+                    port=self.port,
+                    service_name=self.service_name
+                )
+                self.tracer = await tool.create_tracer()
+                with self.tracer.new_trace(sampled=True) as self.span:
+                    self.span.name(func.__name__)
+                    
                     result = await func(*args, **kwargs)
 
 
