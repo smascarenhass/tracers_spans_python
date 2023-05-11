@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name = 'tracers_spans_python',
-    version = '0.0.4',
+    version = '0.0.5',
     author = 'Otávio Mascarenhas',
     author_email = 'otaviomascarenhaspessoal@gmail.com',
     packages = ['tracers_spans_python'],
