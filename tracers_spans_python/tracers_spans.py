@@ -47,6 +47,9 @@ class Tracer:
     def tags_child(self, key : str = None, value: str = None):
         span = self.nested_span
         return span.tag(key, value)
+    
+    async def test_async ():
+        pass
 
     # Use to create a new tracer, in endpoints for examples.
     def new_tracer(self):
@@ -61,7 +64,9 @@ class Tracer:
                 self.tracer = await tool.create_tracer()
                 with self.tracer.new_trace(sampled=True) as self.span:
                     self.span.name(func.__name__)
+                    
                     result = await func(*args, **kwargs)
+
 
                 return result
             return wrapper
@@ -70,13 +75,38 @@ class Tracer:
     # Use in functions to create a childs in a main tracer.
     def new_child(self):
         def decorator(func):
+            try:
+                @wraps(func)
+                def wrapper(*args, **kwargs):
+                    span = self.span
+                    with self.tracer.new_child(span.context) as self.nested_span:
+                        self.nested_span.name(func.__name__)
+                        
+                        result = func(*args, **kwargs)
+
+                    return result
+                return wrapper
+            except:
+                @wraps(func)
+                async def wrapper(*args, **kwargs):
+                    span = self.span
+                    with self.tracer.new_child(span.context) as self.nested_span:
+                        self.nested_span.name(func.__name__)
+                        
+                        result = await func(*args, **kwargs)
+
+                    return result
+                return wrapper
+        return decorator
+    
+    def new_async_child(self):
+        def decorator(func):
             @wraps(func)
-            def wrapper(*args, **kwargs):
+            async def wrapper(*args, **kwargs):
                 span = self.span
                 with self.tracer.new_child(span.context) as self.nested_span:
                     self.nested_span.name(func.__name__)
-                    
-                    result = func(*args, **kwargs)
+                    result = await func(*args, **kwargs)
 
                 return result
             return wrapper

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from functions import *
-from tracers import *
+from api_example.functions import *
+from tracer_global_example.tracers import *
 import aiozipkin as az
 
 
@@ -10,7 +10,7 @@ app = FastAPI()
 # function to call a function that send a tracer
 @app.get("/create_tracer")
 @TRACER.new_tracer()
-async def example_endpoint():
+def example_endpoint():
 
     # Do some work
     result = function
@@ -20,6 +20,20 @@ async def example_endpoint():
     return {
         "result": result(), 
         "resul2": result2(),
+        'name service': TRACER.service_name,
+        'host': TRACER.host 
+        }
+
+@app.get("/create_async_tracer")
+@TRACER.new_tracer()
+async def example_async_endpoint():
+
+    # Do some work
+    result = async_function
+       
+    # Do some more work
+    return {
+        "result": await result(), 
         'name service': TRACER.service_name,
         'host': TRACER.host 
         }

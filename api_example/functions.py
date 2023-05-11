@@ -1,4 +1,4 @@
-from tracers import TRACER
+from tracer_global_example.tracers import TRACER
 import time
 
 @TRACER.new_child()
@@ -15,3 +15,9 @@ def function2():
     TRACER.tags_tracer('teste', 'of tag')
     function()
     return('foi 2')
+
+@TRACER.new_async_child()
+async def async_function():
+    TRACER.annotate_tracer('annotate in a tracer')
+    time.sleep(1)
+    return('test1')
