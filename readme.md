@@ -8,7 +8,11 @@
 
 Library:
 
-<code> pip install tracers-spans-python </code>
+<code> 
+
+pip install tracers-spans-python 
+
+</code>
 
 A global variable must be created with the settings for sending tracers, for example:
 
@@ -68,6 +72,7 @@ For tracer annotations call the annotate_tracer function, and pass the annotatio
 To create a new tracer for an endpoint or asyncrona function, the new_async_tracer function must be called:
 
 <code>
+
     @app.get("/create_tracer")
     @tracer.new_async_tracer()
     async def example_endpoint():
@@ -81,6 +86,7 @@ To create a new tracer for an endpoint or asyncrona function, the new_async_trac
 Para a cração de um novo tracer deve ser chamado a função new_child:
 
 <code>
+
     @app.get("/create_tracer")
     @tracer.new_child()
     def example_endpoint():
@@ -95,6 +101,7 @@ For tracer annotations call the annotate_span function, and pass the annotation 
 To create a new child for an asyncronous function, call the new_async_child function:
 
 <code>
+
     @app.get("/create_tracer")
     @tracer.new_async_child()
     async def example_endpoint():
